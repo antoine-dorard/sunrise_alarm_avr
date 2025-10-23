@@ -1,9 +1,8 @@
-#include <sys/types.h>
 #define F_CPU 1000000UL
 
-#include "display.h"
-
 #include <util/delay.h>
+
+#include "display.h"
 
 int main() {
 
