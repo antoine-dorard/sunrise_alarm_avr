@@ -1,14 +1,14 @@
 #include "display.h"
 
-#define SRCLK _BV(PB0) 
-#define SER _BV(PB2) 
-#define RCLK _BV(PB1) 
+#define SRCLK _BV(PC2) 
+#define SER _BV(PC3) 
+#define RCLK _BV(PC1) 
 
-#define DATA_HIGH()  (PORTB |=  SER)
-#define DATA_LOW()   (PORTB &= ~SER)
+#define DATA_HIGH()  (PORTC |=  SER)
+#define DATA_LOW()   (PORTC &= ~SER)
 
-#define CLK_PULSE()  do { PORTB |=  SRCLK; PORTB &= ~SRCLK; } while(0)
-#define LATCH_PULSE() do { PORTB |=  RCLK; PORTB &= ~RCLK; } while(0)
+#define CLK_PULSE()  do { PORTC |=  SRCLK; PORTC &= ~SRCLK; } while(0)
+#define LATCH_PULSE() do { PORTC |=  RCLK; PORTC &= ~RCLK; } while(0)
 
 #define DIGITS 4
 
@@ -52,9 +52,9 @@ void reset() {
 }
 
 void initDisplay() {
-    DDRB |= SRCLK; // clock pin
-    DDRB |= SER; // serial data pin
-    DDRB |= RCLK; // latch pin
+    DDRC |= SRCLK; // clock pin
+    DDRC |= SER; // serial data pin
+    DDRC |= RCLK; // latch pin
 
     reset();
 }
