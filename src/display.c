@@ -1,4 +1,5 @@
 #include "display.h"
+#include "clock.h"
 
 #define SRCLK _BV(PC2) 
 #define SER _BV(PC3) 
@@ -23,6 +24,10 @@
 #define DIGIT8 0b01111111
 #define DIGIT9 0b01101111
 
+int isHourBlinking = 0;
+int isMinuteBlinking = 0;
+
+
 void reset();
 
 uint8_t getDigitMapping(int digit) {
@@ -37,6 +42,7 @@ uint8_t getDigitMapping(int digit) {
         case 7: return DIGIT7; // ABC
         case 8: return DIGIT8; // All
         case 9: return DIGIT9; // All but E
+        case 10: return 0b00000000;
     }
     return 0;
 }
@@ -84,6 +90,15 @@ void writeToSR(uint32_t data) {
 
 
 void setDisplay(int digit1, int digit2, int digit3, int digit4){
+
+    if(isHourBlinking && getHalfSecond()){
+        digit1 = 10;
+        digit2 = 10;
+    } else if (isMinuteBlinking && getHalfSecond()) {
+        digit3 = 10;
+        digit4 = 10;
+    }
+
     uint32_t data = getDigitMapping(digit4);
     data <<= 8;
     data |= getDigitMapping(digit3);
@@ -95,4 +110,12 @@ void setDisplay(int digit1, int digit2, int digit3, int digit4){
     data = ~data; // The 7-segments is ON on low (Common Anode mode), so invert the bits
 
     writeToSR(data);
+}
+
+void setDisplayBlink(int digitGroup){
+    switch (digitGroup) {
+        case NO_BLINK: isHourBlinking = 0; isMinuteBlinking = 0; break;
+        case BLINK_HOURS: isHourBlinking = 1; isMinuteBlinking = 0; break;
+        case BLINK_MINUTES: isHourBlinking = 0; isMinuteBlinking = 1; break;
+    }
 }
