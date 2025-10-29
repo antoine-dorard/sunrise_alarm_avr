@@ -1,8 +1,8 @@
 #include <avr/io.h>
 
 #define NO_BLINK 0
-#define BLINK_HOURS 1
-#define BLINK_MINUTES 2
+#define HOURS 1
+#define MINUTES 2
 
 
 void initDisplay();

@@ -115,7 +115,7 @@ void setDisplay(int digit1, int digit2, int digit3, int digit4){
 void setDisplayBlink(int digitGroup){
     switch (digitGroup) {
         case NO_BLINK: isHourBlinking = 0; isMinuteBlinking = 0; break;
-        case BLINK_HOURS: isHourBlinking = 1; isMinuteBlinking = 0; break;
-        case BLINK_MINUTES: isHourBlinking = 0; isMinuteBlinking = 1; break;
+        case HOURS: isHourBlinking = 1; isMinuteBlinking = 0; break;
+        case MINUTES: isHourBlinking = 0; isMinuteBlinking = 1; break;
     }
 }
