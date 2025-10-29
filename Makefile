@@ -1,9 +1,13 @@
 SRC_PATH=src
 BUILD_PATH=build
+TEST_PATH=tests
 
 SRCS := $(wildcard $(SRC_PATH)/*.c)
 HEADERS := $(wildcard $(SRC_PATH)/*.h)
 OBJS := $(patsubst $(SRC_PATH)/%.c,$(BUILD_PATH)/%.o,$(SRCS))
+
+TEST_SRCS := $(wildcard $(TEST_PATH)/*.test.c)
+TEST_OBJS := $(patsubst $(TEST_PATH)/%.test.c,$(BUILD_PATH)/%.test.o,$(TEST_SRCS))
 
 PROJECT=sunrise_alarm_avr
 
@@ -29,3 +33,14 @@ clean:
 
 readfuse:
 	avrdude -p m328p -c usbasp -U lfuse:r:-:h -U hfuse:r:-:h -U efuse:r:-:h
+
+
+test: all ${TEST_OBJS}
+	bash ./run_tests.sh
+
+$(BUILD_PATH)/%.test.o: $(TEST_PATH)/%.test.c $(SRC_PATH)/%.h $(SRC_PATH)/%.c
+	@mkdir -p $(BUILD_PATH)
+	gcc -Wall -Os -o $@ $^
+	chmod +x $@
+
+
