@@ -50,11 +50,10 @@ uint32_t getHalfSecond(){
 }
 
 ISR(TIMER1_COMPA_vect){
-    if(half_seconds){
-        seconds++;
-        half_seconds = 0;
-    }
-    half_seconds++;
+        half_seconds ^= 1U;
+        if (half_seconds == 0) {
+            seconds++;
+        }
 
     if (seconds >= 86400){
         seconds = 0;
