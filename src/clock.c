@@ -45,7 +45,7 @@ uint32_t getHours(){
     return hours;
 }
 
-uint32_t getHalfSecond(){
+uint32_t isHalfSecond(){
     return half_seconds;
 }
 

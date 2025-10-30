@@ -91,10 +91,10 @@ void writeToSR(uint32_t data) {
 
 void setDisplay(int digit1, int digit2, int digit3, int digit4){
 
-    if(isHourBlinking && getHalfSecond()){
+    if(isHourBlinking && isHalfSecond()){
         digit1 = 10;
         digit2 = 10;
-    } else if (isMinuteBlinking && getHalfSecond()) {
+    } else if (isMinuteBlinking && isHalfSecond()) {
         digit3 = 10;
         digit4 = 10;
     }
