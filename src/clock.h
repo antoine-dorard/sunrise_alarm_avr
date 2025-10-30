@@ -3,9 +3,11 @@
 void initClock();
 
 uint32_t getSeconds();
-uint32_t getMinutes();
-uint32_t getHours();
+//uint16_t getMinutes();
 
-uint32_t isHalfSecond();
+uint8_t getClockMinutes();
+uint8_t getClockHours();
+
+unsigned isHalfSecond();
 
 void setTime(int hour, int min);

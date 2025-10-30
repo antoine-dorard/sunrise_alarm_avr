@@ -42,7 +42,12 @@ uint8_t getDigitMapping(int digit) {
         case 7: return DIGIT7; // ABC
         case 8: return DIGIT8; // All
         case 9: return DIGIT9; // All but E
-        case 10: return 0b00000000;
+        case 10: return 0b00000000; 
+        // Special Digits
+        case D_DASH: return 0b01000000;
+        case D_O: return 0b01011100;
+        case D_N: return 0b00110111;
+        case D_A: return 0b01110111;
     }
     return 0;
 }
@@ -112,10 +117,11 @@ void setDisplay(int digit1, int digit2, int digit3, int digit4){
     writeToSR(data);
 }
 
-void setDisplayBlink(int digitGroup){
+void setDisplayBlink(int digitGroup, int blink) {
     switch (digitGroup) {
         case NO_BLINK: isHourBlinking = 0; isMinuteBlinking = 0; break;
-        case HOURS: isHourBlinking = 1; isMinuteBlinking = 0; break;
-        case MINUTES: isHourBlinking = 0; isMinuteBlinking = 1; break;
+        case HOURS: isHourBlinking = blink; break;
+        case MINUTES: isMinuteBlinking = blink; break;
+        default: isHourBlinking = 0; isMinuteBlinking = 0;
     }
 }
